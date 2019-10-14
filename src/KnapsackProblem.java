@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class KnapsackProblem {
 
@@ -20,6 +19,10 @@ public class KnapsackProblem {
         this.weights = new ArrayList<>();
 
         readFile(path);
+    }
+
+    public int getNumberOfItems() {
+        return numberOfItems;
     }
 
     public int calculateFitness(ArrayList<Integer> genotype){

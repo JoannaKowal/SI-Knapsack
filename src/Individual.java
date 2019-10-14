@@ -6,11 +6,16 @@ public class Individual {
     private int fitness;
     private ArrayList<Integer> genotype;
 
-    public Individual(int numberOfBits){
-        this.numberOfBits = numberOfBits;
+    public Individual(){
         this.genotype = new ArrayList<>();
+        this.numberOfBits = genotype.size();
         randomize();
     }
+
+    public int getFitness(){
+        return fitness;
+    }
+
     public void mutate(double mutProb){
 
         Random generator = new Random();
@@ -24,8 +29,8 @@ public class Individual {
     public ArrayList<Individual> crossover(Individual other){
 
         Random generator = new Random();
-        Individual child1 = new Individual(numberOfBits);
-        Individual child2 = new Individual(numberOfBits);
+        Individual child1 = new Individual();
+        Individual child2 = new Individual();
         ArrayList<Individual> children = new ArrayList<>();
         int crossingPoint =  generator.nextInt(numberOfBits) + 1;
         for(int i = 0; i < crossingPoint; i++){
@@ -47,6 +52,17 @@ public class Individual {
         fitness = problem.calculateFitness(genotype);
         return fitness;
     }
+
+    public Individual copy(){
+
+        Individual individual = new Individual();
+        individual.fitness = this.fitness;
+        for(int i = 0; i < this.numberOfBits; i++){
+
+            individual.genotype.set(i, this.genotype.get(i));
+        }
+        return individual;
+    }
     private void bitFlip(int index){
 
         int bit = genotype.get(index);
@@ -58,6 +74,7 @@ public class Individual {
         int bit = generator.nextInt(2);
         genotype.add(bit);
     }
+
 
 
 
