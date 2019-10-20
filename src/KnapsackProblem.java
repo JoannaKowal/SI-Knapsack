@@ -25,7 +25,7 @@ public class KnapsackProblem {
         return numberOfItems;
     }
 
-    public int calculateFitness(ArrayList<Integer> genotype){
+    public double calculateFitness(ArrayList<Integer> genotype){
 
         int profit = 0;
         int weight = 0;
@@ -36,7 +36,7 @@ public class KnapsackProblem {
             }
         }
         if(weight > capacity){
-            return 0;
+            return 0.1 * weight;
         }
         return profit;
 
@@ -49,17 +49,13 @@ public class KnapsackProblem {
                 FileReader fr = new FileReader(file);
                 BufferedReader br = new BufferedReader(fr);
                     try {
-                        while(parts.length <= 2){
-
-                            String line = br.readLine();
-                            parts = line.split(",");
-                            loadItem(br);
-                        }
-
+                        String line = br.readLine();
+                        parts = line.split(",");
+                        numberOfItems = Integer.valueOf(parts[0]);
+                        capacity = Integer.valueOf(parts[1]);
+                        loadItem(br);
                     } catch (IOException exception){}
             }catch(FileNotFoundException exception){}
-            numberOfItems = Integer.valueOf(parts[0]);
-            capacity = Integer.valueOf(parts[1]);
 
     }
     private void loadItem(BufferedReader br){
@@ -67,11 +63,16 @@ public class KnapsackProblem {
         try {
             String line = br.readLine();
             String[] parts = line.split(",");
-            int profit = Integer.valueOf(parts[0]);
-            int weight = Integer.valueOf(parts[1]);
-            profits.add(profit);
-            weights.add(weight);
+            while(parts.length == 2){
+                int profit = Integer.valueOf(parts[0]);
+                int weight = Integer.valueOf(parts[1]);
+                profits.add(profit);
+                weights.add(weight);
+                line = br.readLine();
+                parts = line.split(",");
+            }
 
         } catch (IOException exception){}
+
     }
 }

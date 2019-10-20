@@ -7,13 +7,15 @@ public class Algorithm {
     private double crossProb;
     private KnapsackProblem problem;
     private Individual bestIndividual;
+    private int tournamentSize;
     private ArrayList<Individual> population;
 
-    public Algorithm(int popSize, double crossProb, double mutProb, KnapsackProblem problem) {
+    public Algorithm(int popSize, double crossProb, double mutProb, int tournamentSize, KnapsackProblem problem) {
 
         this.popSize = popSize;
         this.crossProb = crossProb;
         this.mutProb = mutProb;
+        this.tournamentSize = tournamentSize;
         this.problem = problem;
         this.bestIndividual = null;
         initPopulation();
@@ -31,9 +33,10 @@ public class Algorithm {
 
     private void initPopulation() {
 
-        int numberOfIndividuals = problem.getNumberOfItems();
+        int numberOfBits = problem.getNumberOfItems();
+        population = new ArrayList<>();
         while (population.size() != popSize) {
-            population.add(new Individual());
+            population.add(new Individual(numberOfBits));
         }
     }
 
@@ -48,7 +51,7 @@ public class Algorithm {
     private void saveBest() {
 
         Individual currentBest = population.get(0);
-        for (int i = 0; i < population.size(); i++) {
+        for (int i = 1; i < population.size(); i++) {
 
             if (population.get(i).getFitness() > currentBest.getFitness()) {
 
@@ -60,7 +63,8 @@ public class Algorithm {
             bestIndividual = currentBest.copy();
         }
 
-        System.out.println("Best: " + bestIndividual.getFitness());
+        System.out.println("Best: " + bestIndividual.printIndividual() + " fitness: "
+                + bestIndividual.getFitness());
     }
 
     private void crossover() {
@@ -79,6 +83,7 @@ public class Algorithm {
                 newPopulation.add(parent2.copy());
             }
         }
+        population = newPopulation;
     }
 
     private void mutate(){
@@ -87,5 +92,23 @@ public class Algorithm {
 
             population.get(i).mutate(mutProb);
         }
+    }
+
+    private Individual selectParent(){
+
+        Random generator = new Random();
+        ArrayList<Individual> individuals = new ArrayList<>(tournamentSize);
+        int index;
+        for(int i = 0; i < tournamentSize; i++) {
+            index = generator.nextInt(popSize);
+            individuals.add(population.get(index));
+        }
+        Individual parent = individuals.get(0);
+        for(int i = 1; i < individuals.size(); i++){
+            if(individuals.get(i).getFitness() > parent.getFitness()){
+                parent = individuals.get(i);
+            }
+        }
+        return parent;
     }
 }
