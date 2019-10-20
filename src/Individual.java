@@ -57,7 +57,9 @@ public class Individual {
             setFitness(cachedValue);
         }
         else{
-            setFitness(problem.calculateFitness(genotype));
+            double fitness = problem.calculateFitness(genotype);
+            cache.put((ArrayList<Integer>) genotype.clone(), fitness);
+            setFitness(fitness);
         }
 
     }

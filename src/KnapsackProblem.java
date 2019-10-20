@@ -9,6 +9,7 @@ public class KnapsackProblem {
   //  private int totalWeight;
     private ArrayList<Integer> profits;
     private ArrayList<Integer> weights;
+    private int fitnessFuncionEvaluations = 0;
 
     public KnapsackProblem(String path){
 //        this.numberOfItems = numberOfItems;
@@ -26,7 +27,7 @@ public class KnapsackProblem {
     }
 
     public double calculateFitness(ArrayList<Integer> genotype){
-
+        fitnessFuncionEvaluations ++;
         int profit = 0;
         int weight = 0;
         for(int i = 0; i < genotype.size(); i++){
@@ -74,5 +75,9 @@ public class KnapsackProblem {
 
         } catch (IOException exception){}
 
+    }
+
+    public int getFitnessFuncionEvaluations() {
+        return fitnessFuncionEvaluations;
     }
 }

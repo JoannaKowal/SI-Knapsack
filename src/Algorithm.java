@@ -71,8 +71,10 @@ public class Algorithm {
 
         ArrayList<Individual> newPopulation = new ArrayList<>();
         while (newPopulation.size() != popSize) {
-            Individual parent1 = selectParent();
-            Individual parent2 = selectParent();
+//            Individual parent1 = selectParent();
+//            Individual parent2 = selectParent();
+            Individual parent1 = roulete();
+            Individual parent2 = roulete();
             Random doubleGenerator = new Random();
             double crossoverValue = doubleGenerator.nextDouble();
             if (crossoverValue < crossProb) {
@@ -110,5 +112,21 @@ public class Algorithm {
             }
         }
         return parent;
+    }
+    private Individual roulete(){
+        double sum = 0;
+        for(int i = 0; i < popSize; i++){
+            sum += population.get(i).getFitness();
+        }
+        Random generator = new Random();
+        double value = generator.nextDouble() * sum;
+        double partialSum = 0;
+        for(int i = 0; i < popSize; i++){
+            partialSum += population.get(i).getFitness();
+            if(partialSum > value){
+                return population.get(i);
+            }
+        }
+        return population.get(popSize - 1);
     }
 }
