@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Individual {
     private int numberOfBits;
     private double fitness;
     private ArrayList<Integer> genotype;
+    private static HashMap< ArrayList<Integer>, Double> cache = new HashMap<>();
 
     public Individual(int numberOfBits){
         this.numberOfBits = numberOfBits;
@@ -50,7 +52,14 @@ public class Individual {
 
     }
     public void evaluate(KnapsackProblem problem){
-        setFitness(problem.calculateFitness(genotype));
+        Double cachedValue = cache.get(genotype);
+        if(cachedValue != null){
+            setFitness(cachedValue);
+        }
+        else{
+            setFitness(problem.calculateFitness(genotype));
+        }
+
     }
 
     public Individual copy(){

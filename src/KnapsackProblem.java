@@ -5,16 +5,16 @@ public class KnapsackProblem {
 
     private int numberOfItems;
     private int capacity;
-    private int totalProfit;
-    private int totalWeight;
+//    private int totalProfit;
+  //  private int totalWeight;
     private ArrayList<Integer> profits;
     private ArrayList<Integer> weights;
 
     public KnapsackProblem(String path){
-        this.numberOfItems = numberOfItems;
-        this.capacity = capacity;
-        this.totalProfit = totalProfit;
-        this.totalWeight = totalWeight;
+//        this.numberOfItems = numberOfItems;
+//        this.capacity = capacity;
+//        this.totalProfit = totalProfit;
+//        this.totalWeight = totalWeight;
         this.profits = new ArrayList<>();
         this.weights = new ArrayList<>();
 
