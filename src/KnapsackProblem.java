@@ -37,7 +37,7 @@ public class KnapsackProblem {
             }
         }
         if(weight > capacity){
-            return 0.1 * weight;
+            return 0.1 * profit;
         }
         return profit;
 
@@ -54,12 +54,12 @@ public class KnapsackProblem {
                         parts = line.split(",");
                         numberOfItems = Integer.valueOf(parts[0]);
                         capacity = Integer.valueOf(parts[1]);
-                        loadItem(br);
+                        loadItems(br);
                     } catch (IOException exception){}
             }catch(FileNotFoundException exception){}
 
     }
-    private void loadItem(BufferedReader br){
+    private void loadItems(BufferedReader br){
 
         try {
             String line = br.readLine();
